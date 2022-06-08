@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -16,28 +17,56 @@ export class DashboardComponent implements OnInit {
   psw1= "";
   amount1="";
 
-  constructor(private ds:DataService) { }
+  depositForm=this.fb.group({
+    acno: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+    psw: ['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
+    amount: ['',[Validators.required,Validators.pattern('[0-9 ]*')]]
+  });
+
+  withdrawForm=this.fb.group({
+    acno1: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+    psw1: ['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
+    amount1: ['',[Validators.required,Validators.pattern('[0-9 ]*')]]
+  });
+
+  user:any;
+  constructor(private ds:DataService, private fb:FormBuilder) { 
+    this.user=this.ds.currentUser;
+  }
 
   ngOnInit(): void {
   }
   deposit(){
-    var acno= this.acno;
-    var psw= this.psw;
-    var amount=this.amount;
-    const result= this.ds.deposit(acno, psw, amount);
+    var acno= this.depositForm.value.acno;
+    var psw= this.depositForm.value.psw;
+    var amount=this.depositForm.value.amount;
 
-    if(result){
-      alert(amount+ "deposited successfully and new balance is" +result)
+    if(this.depositForm.valid){
+      const result= this.ds.deposit(acno, psw, amount);
+
+      if(result){
+        alert(amount+ "deposited successfully and new balance is" +result)
+      }
     }
+    else{
+      alert("Invalid");
+    }
+    
   }
   withdraw(){
-    var acno1= this.acno1;
-    var psw1= this.psw1;
-    var amount1=this.amount1;
-    const result= this.ds.withdraw(acno1, psw1, amount1);
+    var acno1= this.withdrawForm.value.acno1;
+    var psw1= this.withdrawForm.value.psw1;
+    var amount1=this.withdrawForm.value.amount1;
 
-    if(result){
-      alert(amount1+ "debited successfully and new balance is" +result);
+    if(this.withdrawForm.valid){
+      const result= this.ds.withdraw(acno1, psw1, amount1);
+
+      if(result){
+        alert(amount1+ "debited successfully and new balance is" +result);
+      }
+    }
+    else{
+      alert("Invalid");
     }
   }
 
