@@ -6,13 +6,18 @@
 
   <h3 style="color: white;">Welcome {{user}}</h3>
   <a routerLink="/transaction">Transaction History</a>
+  <button class="btn btn-warning" (click)="logOut()" style="float: right; margin-right: 20px;">Log out</button>
+  <button class="btn btn-danger" (click)="deleteAccount()" style="float: right; margin-right: 20px;">Delete</button>
+
+  <h5 style="color: white;">{{lDate|date:'short'}}</h5>
+  <hr>
+  <app-delete-confirm (onCancel)="cancel()" [item]="accno"></app-delete-confirm>
   
-  
-  <div class="container col-md-12 mt-0">
+  <div [ngClass]="accno?'c1':'' " class="container col-md-12 mt-0">
       <div class="d-flex justify-content-center h-100">
           <div class="card">
               <div class="card-header">
-                  <h3 class="text-center">Deposit Form</h3>
+                  <h3 appHighlight class="text-center">Deposit Form</h3>
                   
               </div>
               <div class="card-body">
@@ -60,11 +65,11 @@
   </div>
   
   
-  <div class="container col-md-12 mt-0">
+  <div [ngClass]="accno?'c1':'' " class="container col-md-12 mt-0">
     <div class="d-flex justify-content-center h-100">
         <div class="card">
             <div class="card-header">
-                <h3 class="text-center">Withdrawl Form</h3>
+                <h3 appHighlight class="text-center">Withdrawl Form</h3>
                 
             </div>
             <div class="card-body">

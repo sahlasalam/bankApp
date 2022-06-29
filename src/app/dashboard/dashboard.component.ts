@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -30,11 +31,19 @@ export class DashboardComponent implements OnInit {
   });
 
   user:any;
-  constructor(private ds:DataService, private fb:FormBuilder) { 
+  lDate:any;
+  accno="";
+
+  constructor(private ds:DataService, private fb:FormBuilder, private move:Router) { 
     this.user=this.ds.currentUser;
+    this.lDate= new Date()
   }
 
   ngOnInit(): void {
+    if(!localStorage.getItem("currentAcno")){
+      alert("Please login");
+      this.move.navigateByUrl("");
+    }
   }
   deposit(){
     var acno= this.depositForm.value.acno;
@@ -68,6 +77,17 @@ export class DashboardComponent implements OnInit {
     else{
       alert("Invalid");
     }
+  }
+  logOut(){
+    localStorage.removeItem("currentAcno");
+    localStorage.removeItem("currentUser");
+    this.move.navigateByUrl("");
+  }
+  deleteAccount(){
+    this.accno=JSON.parse(localStorage.getItem("currentAcno")|| '');
+  }
+  cancel(){
+    this.accno="";
   }
 
 }

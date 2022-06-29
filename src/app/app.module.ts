@@ -8,6 +8,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { AnimationComponent } from './animation/animation.component';
+import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { TransactionComponent } from './transaction/transaction.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    TransactionComponent
+    TransactionComponent,
+    AnimationComponent,
+    DeleteConfirmComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
